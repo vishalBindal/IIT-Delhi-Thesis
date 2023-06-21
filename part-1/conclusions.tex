@@ -1,0 +1,24 @@
+\section{Conclusions}
+% This paper considers the problem of learning to translate instructions to grounded robot plans. 
+% %
+% We present a neuro-symbolic architecture that learns grounded and executable programs via visual-linguistic reasoning for instruction understanding over a given scene as well as grounded actions that transform the world state towards the intended goal. 
+% %
+% %Our approach assumes a latent space of symbolic programs that reason over dense object representations. 
+% Our central contribution is learning a dense representation for robot actions that on one hand can predict effects on the world scene, and on the other, are amenable to symbolic reasoning. 
+% %
+% We show how the neuro-symbolic model can be trained end-to-end and demonstrate a strong generalization to novel scenes and instructions compared to a neural-only baseline. 
+% %
+% Future work will explore (i) plan adaptation guided by dissonance between rendered and actual scenes during execution (ii) physical manipulator experiments by training on real workspace data and (iii) incorporating notions of induction in the program space to model repetitive actions.  
+% %
+% %This work takes a first step towards learning grounded representation for robot manipulation tasks that are amenable to rich symbolic reasoning. 
+% %
+% %Future work will address three key limitations. First, scalability to longer horizons is a concern as the error in initial positions will have a cascade effect on the later sub goals. Ways to incorporate intermediate supervision or re-planning will be explored. Second, the present work demonstrates the ability to learn dense neural representations for actions, which can be expanded to include a larger set of actions such as pushing, pulling or sliding one or more objects that are likely to be required for realistic assemblies. Finally, we intend to learn object representations along the path to realize physical experiments using visual recognition and control. 
+We present a neuro-symbolic architecture that learns grounded manipulation programs via visual-linguistic reasoning for instruction understanding over a given scene, to achieve a desired goal. Unlike previous work, we do not assume any sub-goal supervision, and demonstrate how our model can be trained end-to-end. Our experiments show strong generalization to novel scenes and instructions compared to a neural-only baseline.
+%transforms the world state towards the intended goal. %Our programs can be thought of as executing grounded actions that transform the world state towards the intended goal. 
+%
+%Our approach assumes a latent space of symbolic programs that reason over dense object representations. 
+% Our central contribution is learning a dense representation for robot actions that on one hand can predict effects on the world scene, and on the other, are amenable to symbolic reasoning. 
+%
+%We demonstrate how the neuro-symbolic model can be trained end-to-end and demonstrate a strong generalization to novel scenes and instructions compared to a neural-only baseline.  
+% Limitations include sparse action space, tokenized language and lack of uncertainty modeling in action semantics. 
+Directions for future work include dealing with richer instruction space including looping constructs, real-time recovery from errors caused by faulty execution, and working with real workspace data.

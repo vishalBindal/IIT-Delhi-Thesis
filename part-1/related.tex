@@ -1,0 +1,165 @@
+\section{Related Works}
+
+\textbf{Grounding Instructions to Robot Control.} Traditional approaches for grounding instructions assume a symbolic description of the environment state 
+and robot actions. 
+%
+These approaches learn to associate phrases in an instruction with symbols conveying their meaning from 
+annotated datasets. 
+%
+For example, \cite{howard2014natural,paul2016efficient,tellex2011approaching} map language to discrete motion constraints that can be provided to a motion planner for trajectory generation, \cite{matuszek2013learning,knepper2013ikeabot} parse language to a logical parse that includes  robot control actions and \cite{gopalan2018sequence,williams2018learning} use sequence to sequence modeling to ground language to LTL formulae capturing high-level task specifications. 
+%
+% Such approaches assume a symbolic model of the world (either hand coded or a-priori learned). 
+% The approach presented in this work, additionally learns dense disentangled representations for 
+% spatial concepts as well as actions from data while learning a grounding for an input instruction.  
+%
+In contrast to such approaches, the proposed work doesn't assume a symbolic model of the world and learns spatial and visual concepts and action semantics from data. 
+
+\textbf{Inferring Plans from Instructions.} Another set of approaches focus on multi-stage tasks (e.g., cooking, assembly etc.) and propose 
+learners that can infer action sequences by observing human task demonstrations. 
+%
+The work in ~\cite{paxton2019prospection} proposes a recurrent neural architecture that converts a natural language instruction to a sequence of intermediate goals for robot execution. 
+%
+Efforts such as \cite{shah2018bayesian,wang2020learning,kress2008translating} learn LTL task specifications from humans demonstrations and introduce a model for effectively searching in the space of programs. 
+%
+In another effort, ~\cite{lazaro2019beyond}, authors introduce a cognitively-inspired approach that infers 
+a likely program from a symbolic generative grammar for a robot manipulator to form and re-arrange block patterns
+in a table top setting. 
+%
+% Tenorth et al. \cite{tenorth2010understanding,lisca2015towards} use human activity demonstrations to train a relational probabilistic model to infer fully grounded symbolic plans from instructions. 
+%
+Misra et al. \cite{misra2016tell} present a similar approach but additionally assess plan feasibility for inferred plan candidates 
+using a symbolic planner in the training loop. 
+%
+Despite successful demonstrations, these approaches require dense  
+intermediate supervision and treat robot actions in a purely symbolic manner without learning their deep grounded semantics. 
+%
+% The proposed method learns a latent space of grounded programs which can be executed in the latent space of object representations. The explicitly reason with disentangled and modular concepts enables learning from \emph{only} the initial and final state data, forgoing the need for dense intermediate supervision. 
+However, our method learns a latent space of composable symbolic programs which can be executed in the latent space of object representations. The composability of the  symbolic programs enables incremental learning through a specified curriculum from only the initial and final state data, forgoing the need for dense intermediate supervision. 
+
+
+\textbf{Learning Action Models.} This work builds on the rich literature on acquiring action models for planning and captures \emph{when} actions are applicable and 
+\emph{how} they affect the world. 
+%
+Efforts such as \cite{konidaris2018skills} and \cite{wang2021learning} 
+learn initiation sets for actions implicitly learning to classify
+the robot's configuration space where an action can be initiated. 
+%
+% Hannah et al. ~\cite{zettlemoyer2005learning} address the complementary problem of acquiring the 
+% transition model and present an algorithm for determining \emph{planning rules} expressing 
+% possible symbolic states resulting from the robot performing an action. 
+%
+~\cite{xia2018learning,silver2020few,zhu2021hierarchical} present neuro-symbolic approaches for learning a latent object-centric world model for tasks such as stacking, re-arrangement etc.  
+%
+In \cite{shridhar2022cliport}, authors introduce an end-to-end model that jointly predicts object affordances  and object displacements specifying metric goals for robot re-arrangement and sorting tasks. 
+%
+Recent parallel work by Wang et al. \cite{wang2023programmatically} builds on \cite{shridhar2022cliport} and represents the task as an executable program parsed from the instruction using a CCG parser, restricting the length and variation of the instructions it can handle. 
+% 
+Even though these approaches successfully learn modular action models that are amenable to planning, the scope of reasoning is limited to one-hop reasoning over spatial relations and attributes. In contrast, this work focuses on interpreting task instructions that require compositional/hierarchical spatial reasoning over an extended planning horizon. 
+
+
+
+%% %%%
+\iffalse
+
+\textbf{Robot Skill Learning. }
+The ability to reason and plan tasks is conditioned on the robot possessing knowledge 
+of when it can perform actions and how it affects the world. 
+%
+Traditional approaches such as~\cite{knepper2013ikeabot} 
+model robot actions as symbolic pre-conditions and effects. 
+%
+Such representations are often hand-coded making them 
+brittle and error-prone in practice. 
+%
+Learning based efforts aim at acquiring actions representations through human demonstration 
+or via self-supervision. 
+%
+
+
+\textbf{Robot Task Planning and Representations. }
+Instead of focusing on learning primitive skills, complementary efforts have 
+focused learning to translate a high-level instruction to a sequence of symbolic actions 
+to accomplish multi-step tasks such as navigation or assembly. 
+
+In ~\cite{paxton2019prospection}, authors introduce a recurrent architecture that 
+translates language instructions into a sequence of sub-goals for the manipulator to follow. 
+Central to the approach is a recurrent architecture that learns to predict sequential changes in the world 
+model caused by robot actions. Although the model makes significant progress in predicting future world states, 
+the model lacks the notion of grounded and executable representation for actions. As a result, 
+the generalization performance degrades with tasks possessing repetitive structure that are unseen in training. 
+
+The work in  ~\cite{paxton2019prospection} tackles the problem of learning spatial relational concepts 
+and introduce a neural model that uses a bottleneck layer to recover disentangled representation for action. 
+The task of converting an instruction to a sequence of symbolic actions is largely treated as sequence to 
+sequence problem. Such a representation limits scope for rich reasoning and generalization to novel scenes.  
+%
+In contrast, this work adopts a program learning view, with explicit grounded representations for manipulation 
+concepts that can be composed in symbolic programs allowing explicit reasoning with learned neural modules. 
+
+In another effort, ~\cite{lazaro2019beyond}, authors introduce a cognitively-inspired approach for inferring 
+executable programs. The authors demonstrate the ability to recover programs that the robot can execute to
+modify block patterns to a target configuration. However, the authors assume a deterministic grounding from 
+sensory inputs to discrete symbols. In contrast, this work builds an action representation directly on the 
+perceived objects in the manipulation area. 
+
+
+Finally, other efforts have attempted to learn rich logical description of tasks from human demonstration 
+aimed towards inductive generalization to novel domains. 
+%
+ 
+ %
+In contrast, this paper learns executable concepts that can be reasoned when combined in programs, 
+endowing the ability to synthesize the world state after program execution.  
+%
+%Similarly, introduce a policy prior that effectively constrains the program space. 
+
+\textbf{Instruction Following. }
+Related efforts address the problem of inferring manipulation constraints \cite{howard2014natural, paul2016efficient} 
+that that capture the intended goal from language utterance for the purposes of commanding a robot. 
+%
+Prominent models such as learn to associate linguistic constituents with a symbolic representation of the environment. 
+%
+The likely association or the \emph{grounding} for the instruction is used to derive a motion plan for the robot. 
+%
+Such approaches assume the presence of spatial concepts and focus on learning the association between language 
+and they physical world state. 
+%
+The work presented in this paper, learns such spatial and action concepts directly from natural supervision forgoing the need 
+for explicit hand coding of concepts. 
+%
+Other related efforts \cite{paul2018temporal, roy2019leveraging} 
+learn groundings for actions and spatial relations assuming a set of hand-coded features 
+or directly from data but lack an explicit representation of symbolic reasoning which may be needed for interpreting 
+an instruction. 
+%
+The explicit notion of a program space used in this work makes learned grounded concepts amenable 
+to symbolic reasoning.  
+%
+
+ 
+\textbf{Neuro-symbolic concept learning. } 
+%
+This paper builds on the Neuro-symbolic concept learning framework~\cite{Mao2019NeuroSymbolic}. 
+The ability to acquire executable concepts from natural supervision. Applied to the visual question answering task. 
+%
+These approaches have successfully demonstrated the ability to learn static spatial concepts (relative positions, orientations)
+and image attributes such as (appearance) etc. 
+%
+Recent efforts such as ~\cite{yi2019clevrer}, model dynamic interactions such as collisions an additionally model object consistency 
+using temporally consistent appearance cues. 
+%
+We build on the model introduced in ~\cite{Mao2019NeuroSymbolic}. 
+%
+This work introduces the physical agent affecting the scene and 
+address the task of learning grounded and executable representations for robot actions that cause changes in the 
+environment in service of symbolic goals such as creating assemblies. 
+%
+More generally, neuro-symbolic approaches have also found applications in visual-question answering~\cite{yi2018neural}, 
+modeling visual structure in scenes~\cite{li2020multi}, inferring motion programs~\cite{kulal2021hierarchical} etc.  
+%
+%To the best of our knowledge, the task of learning action representations for goal-directed physical agent affecting the environment 
+%has not been addressed. 
+% 
+
+\fi
+

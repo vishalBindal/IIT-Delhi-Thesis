@@ -1,0 +1,53 @@
+\begin{abstract}
+%
+%We present a neuro-symbolic model for learning robotic manipulation tasks. 
+%
+Given a natural language instruction and an input scene, our goal is to train a model %which when presented with a natural language instruction, and an input scene, 
+to output a \emph{manipulation program} that can be executed by the robot.
+%%, composed of learned actions and reasoning on the input scene, 
+%describing how the input scene can be manipulated by the robot resulting in the intended scene. 
+%
+%The inferred program also provides sequential sub-goals as end-effector positions for the robot’s low-level motion planner to execute. 
+%
+Prior approaches for this task possess one of the following limitations: (i) rely on hand-coded symbols for concepts limiting generalization beyond those seen during training~\cite{paul2016efficient} (ii) infer action sequences from instructions but require dense sub-goal supervision~\cite{paxton2019prospection} or (iii) 
+lack semantics required for deeper object-centric reasoning inherent in interpreting complex instructions~\cite{shridhar2022cliport}.
+%
+%From a modeling perspective, we first parse the natural language command in the form of a symbolic program, which is then executed over the input scene, using the neural representation of various symbolic concepts.
+%
+%The model learns grounded and executable neural representations for actions (as a transformation to objects in a latent space). 
+%
+% In contrast, our approach is neuro-symbolic and can handle linguistic as well as perceptual variations, is end-to-end differentiable requiring no intermediate supervision, and makes use of symbolic reasoning constructs which operate on a latent neural object-centric representation, allowing for deeper reasoning over the input scene.
+In contrast, our approach can handle linguistic as well as perceptual variations, end-to-end trainable and requires no intermediate supervision. The proposed model uses symbolic reasoning constructs that operate on a latent neural object-centric representation, allowing for deeper reasoning over the input scene.
+%, resulting in an expressive space of grounded manipulation programs.
+%that are generalizable to unseen settings. 
+%that are highly 
+%interpretable and generalizable to unseen settings. 
+%
+Central to our approach is a modular structure  consisting of a {\em hierarchical instruction parser} and an {\em  action simulator} to learn  disentangled action representations.
+%learned via RL and the use of \emph{gumble-softmax} layer to work as a selector facilitating \emph{disentanglement} in the action space. 
+%
+%Overall model is differentiable end-to-end with no intermediate supervision. 
+%
+%
+Our experiments on a simulated environment with a 7-DOF manipulator, consisting of instructions with varying number of steps and scenes with different number of objects,  demonstrate that our model is robust to such variations and significantly outperforms baselines, particularly in the generalization settings. The code, dataset and experiment videos are available at \href{https://nsrmp.github.io/}{\texttt{https://nsrmp.github.io}} 
+%the existing baseline.  
+% Add: if we have the demo. 
+%We also show a 7-dof manipulator using the model outputs to complete a stacking task involving sequential object interactions. 
+\end{abstract}
+
+\iffalse
+% Earlier version
+We address the problem of learning a model for neuro-symbolic robotic manipulation. Given the data in the form of triplets, with each triplet representing (a) a natural language instruction (b) an input scene, (c) an output scene, our goal is to train a model which when presented with a natural language instruction, and an input scene, can output a program (composed of learned actions and reasoning on the input scene), explaining how the input scene can be affected to result in the output scene. The inferred program also provides sequential sub-goals for the robot’s low-level motion planner to complete the intended task. 
+Unlike previous approaches, which represent the program to be executed as a sequence of action labels ~\cite{paxton2019prospection}, our model works with explicit neural representation for actions (as a transformation to objects in a latent space), and is amenable to composition with pure symbolic reasoning. This makes our approach highly modular, interpretable, and generalizable to unseen settings. From a modeling perspective, we first parse the natural language command in the form of a symbolic program, which is then executed over the input scene, using the neural representation of various symbolic concepts. 
+The key building blocks of our architecture include, training of the parser via reinforcement learning, and the use of \emph{gumbel-softmax} operation to work as a selector, while still allowing for back-propagation, facilitating disentanglement in the action space. The entire system is differentiable end-to-end with no intermediate supervision. Our experiments on a simulated environment, with commands consisting of variations, such as single actions, multiple actions, and scenes consisting of objects with varying attributes, demonstrate that our model is robust to all these variations, and outperforms a robust neural baseline.  
+% Add: if we have the demo. 
+%We also show a 7-dof manipulator using the model outputs to complete a stacking task involving sequential object interactions.
+\fi
+
+%\begin{abstract}
+% version 1
+%We address the problem of learning a model for neuro-symbolic robotic manipulation. Given the data in the form of triplets, with each triplet representing (a) a natural language instruction (b) an input scene, (c) an output scene, our goal is to train a model which when presented with a natural language instruction, and an input scene, can output a sequence of low-level robotic execution commands, represented as a program, to affect the desired manipulation, and result in the output scene. Unlike previous approaches, which represent the program to be executed as a sequence of action labels ~\cite{paxton2019prospection}, our model works with explicit neural representation for actions, as well as their arguments. This makes our approach highly modular, interpretable, and generalizable to unseen settings. From a modeling perspective, we first parse the natural language command in the form of a symbolic program, 
+%with parser trained via reinforcement learning, 
+%which is then executed over the input scene, using the neural representation of various symbolic concepts. 
+%The key building blocks of our architecture include, training of the parser via reinforcement learning, and the use of gumble-softmax operation to work as a selector, while still allowing for back-propagation through symbolic representation. The entire system is differentiable end-to-end with no intermediate supervision. Our experiments on a simulated environment, with commands consisting of variations, such as single actions, multiple actions, and scenes consisting of objects with varying attributes, demonstrate that our model is robust to all these variations, and significantly outperforms the existing baselines by a huge performance margin.
+%\end{abstract}

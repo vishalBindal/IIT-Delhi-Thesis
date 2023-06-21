@@ -1,0 +1,135 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+%In case you encounter the following error:
+%Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
+%Error 1000 An error occurred while parsing a contents stream. Unable to analyze the PDF file.
+%This is a known problem with pdfLaTeX conversion filter. The file cannot be opened with acrobat reader
+%Please use one of the alternatives below to circumvent this error by uncommenting one or the other
+%\pdfobjcompresslevel=0
+%\pdfminorversion=4
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage{amsmath, mathtools, cuted}
+\usepackage{algorithm2e}
+%\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+% \usepackage[]{footmisc}
+% \usepackage{fancyhdr}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+\bibliography{references.bib}
+
+\title{\LARGE \bf
+%Language Guided Robotic Manipulation via Interpretable Programs}
+%Learning Interpretable Programs for Language Guided \\ Neuro-Symbolic Robotic Manipulation}
+%via Interpretable Programs}
+%Learning Interpretable Programs for Language Guided \\ Neuro-Symbolic Robotic Manipulation}
+Learning Neuro-symbolic Programs for Language Guided \\ Robot Manipulation}
+
+\author{
+Namasivayam K$^{*}$$^{1}$, 
+Himanshu Singh$^{*}$$^{1}$, 
+Vishal Bindal$^{*}$$^{1}$, 
+Arnav Tuli$^{1}$, 
+Vishwajeet Agrawal$^{\#}$$^{2}$, 
+Rahul Jain$^{\#}$$^{2}$, \\
+Parag Singla$^{1}$ and Rohan Paul$^{1}$\\
+\small $^{1}$Affilitated with IIT Delhi. 
+\small $^{2}$Work done when at IIT Delhi.
+$^{*}$ and ${^{\#}}$ denote equal contribution.
+}
+
+% <-this % stops a space
+% \thanks{$^{1}$Authors are with IIT Delhi. $^{*}$ and ${^{\#}}$ denote equal contribution.}
+
+
+%\author{Albert Author$^{1}$ and Bernard D. Researcher$^{2}$% <-this % stops a space
+%\thanks{*This work was not supported by any organization}% <-this % stops a space
+%\thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and %Computer Science,
+%        University of Twente, 7500 AE Enschede, The Netherlands
+%        {\tt\small albert.author@papercept.net}}%
+%}
+
+\newcommand\parser{{\tt LanguageReasoner}}
+\newcommand\sexec{{\tt VisualReasoner}}
+\newcommand\dexec{{\tt ActionSimulator}}
+
+\newcommand\percept{{\tt Perception}}
+\newcommand\filter{{\tt Filter}}
+\newcommand\action{{\tt Action}}
+
+\newcommand\real{\mathbb{R}}
+\usepackage{contour}
+\usepackage{graphicx}
+%\usepackage{ulem}
+\usepackage{bbm}
+%\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+%Colors
+\newcommand{\rohan}[1]{{\color{blue}{{#1}}}}
+% \fancyhf{}%
+% \renewcommand{\headrulewidth}{0pt}% No header rule
+% \renewcommand{\footrulewidth}{0pt}
+% \fancyfoot[L]{Accepted at International Conference on Robotics and Automation (ICRA),  2023 }%
+% \pagestyle{empty}
+\begin{document}
+
+
+
+\maketitle
+% \thispagestyle{fancy}%
+\pagestyle{empty}
+
+\input{abstract}
+\input{intro}
+\input{related}
+\input{problem}
+\input{approach}
+\input{experiment2}
+\input{conclusions}
+\input{ack}
+%\bibliographystyle{iEEEtranS.bst}
+
+%{ieeeconf}
+\newpage
+\printbibliography
+
+\end{document}
+
+
+
+%authors 
+%add main equation 
+%
