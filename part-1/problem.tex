@@ -1,4 +1,4 @@
-\section{Problem Formulation}\label{sec:problem}
+\label{sec:problem}
 %\textbf{Robot and Environment Model. } 
 The robot perceives the world state comprising a set of rigid objects placed on a table via a depth sensor that outputs a depth image $S \in \real^{H\times W \times C}$, where $H,W,C$ respectively
 %. Here, the superscript 
@@ -69,8 +69,18 @@ $\mathcal{L}(\tilde{S}_F^{i},S_F^{i})$
 %\begin{equation*}
 %     \sum_{i}^{M}\mathcal{L}(S_I^{i} = Execution(TaskPlanner(S_I^{i}, \Lambda)), S_F^{i}; \Theta),      
 %\end{equation*}
-where $\tilde{S}_F^{i}$$=$$Simulate(ManipulationProgram(S_I^{i}, \Lambda; \Theta))$ is the final state estimated by simulating the plan inferred by $ManipulationProgram(S_I^{i}, \Lambda)$ on initial state $S_I^i$.  
+where 
+\begin{equation}
+\tilde{S}_F^{i}=Simulate(ManipulationProgram(S_I^{i}, \Lambda; \Theta))
+\end{equation} is the final state estimated by simulating the plan inferred by $ManipulationProgram(S_I^{i}, \Lambda)$ on initial state $S_I^i$. (figure \ref{fig:problem-1}) 
 %\textcolor{red}{Shouldn't loss take plan emitted by task planner (or task planer) as input, or it can be written as %$\mathcal{L}(Plan = TaskPlanner(S_I, \Lambda), S_F; \Theta)$}
 % 
 We seek strong generalization on novel scenes, instructions and plan lengths 
 beyond those encountered during training, along with interpretability in sub-goals. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{assets/part1-problem.png}
+    \caption{Problem formulation: Learning robot manipulation programs}
+    \label{fig:problem-1}
+\end{figure}

@@ -1,18 +1,45 @@
-\section{Background and Problem Formulation}\label{sec:problem}
+\label{sec:problem2}
 %% Planning Model Figure
-\begin{figure}[t!]
+
+\begin{figure}
     \begin{subfigure}{1.0\hsize}
          \centering    
          \includegraphics[scale=0.25]{figures/nsrm.png}
     \end{subfigure}
     \caption{
-        \footnotesize{
+        % \footnotesize{
             \textbf{Planning model.} 
             This work assumes a planning model that given a language utterance and the current world state can synthesize a sequence of actions for manipulation tasks. Crucially, the actions (as well as spatial relations) are functions that can be trained from goal-reaching human task demonstrations. 
         }
-    }
-    \vspace{-0.15in}
+    % }
+    % \vspace{-0.15in}
     \label{fig:nsrm}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/error-force.png}
+        \caption{External force on \\green cube}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/error-interchange.png}
+        \caption{Interchange of yellow dice and white lego by an external agent}
+    \end{subfigure}
+
+    \vspace{1cm}
+
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/error-gripper.png}
+        \caption{Gripper error leading to falling blue cube displacing underlying green lego}
+    \end{subfigure}
+    
+    \caption{Various possible errors during robot execution}
+    \label{fig:errors-possible}
 \end{figure}
 
 
@@ -43,24 +70,21 @@ Further, let $\mathcal{K}: \mathcal{S} \times \mathcal{A} \rightarrow \mathcal{S
 \end{equation}
 
 % ROLL OUT FIGURE
-\begin{figure}[t!]
-    \begin{subfigure}{1.0\hsize}
-         \centering    
-         \includegraphics[scale=0.19]{figures/demo.png}
-    \end{subfigure}
+\begin{figure}
+    % \begin{subfigure}{1.0\hsize}
+         \centering     \includegraphics[width=\textwidth]{figures/demo.png}
+    % \end{subfigure}
     \caption{
-        \footnotesize{
             \textbf{Error detection and recovery pipeline.}
-            Figure illustrates our error detection and recovery pipeline. Using the scene-graph predictor, we can \textit{imagine} the intermediate states that the robot should encounter during manipulation. We compare those with the actual state at run-time (at each step) and detect discrepancies if any. In case of discrepancy, our recovery mechanism kicks in and a plan is generated to the \textit{imagined} state. 
-        }
+             Using the scene-graph predictor, we can \textit{imagine} the intermediate states that the robot should encounter during manipulation. We compare those with the actual state at run-time (at each step) and detect discrepancies if any. In case of discrepancy, our recovery mechanism kicks in and a plan is generated to the \textit{imagined} state. 
     }
-    \vspace{-0.15in}
+    % \vspace{-0.15in}
     \label{fig:rollout}
 \end{figure}
 
 \textbf{Learning to Recover Plans. }
 %
-Online plan execution may be prone to \emph{internal} or \emph{external} disturbances, causing the robot to be in an \emph{unplanned} erroneous intermediate state, $S_E$. Hence, the robot may find itself in intermediate states to be different than the ones expected $S_t$ due to disturbances which necessitates the synthesis of a new \emph{recovery} plan $\mathbf{\Pi_{S_E}}$, such that $\mathcal{E}(S_E, \mathbf{\Pi_{S_E}}) =_\mathcal{S} \mathcal{E}(S_I, \mathbf{\Pi_{S_I}})$, see Figure~\ref{fig:rollout}.
+Online plan execution may be prone to \emph{internal} or \emph{external} disturbances, causing the robot to be in an \emph{unplanned} erroneous intermediate state, $S_E$. See figure~\ref{fig:errors-possible} for examples of such disturbances.  Hence, the robot may find itself in intermediate states to be different than the ones expected $S_t$ due to disturbances which necessitates the synthesis of a new \emph{recovery} plan $\mathbf{\Pi_{S_E}}$, such that $\mathcal{E}(S_E, \mathbf{\Pi_{S_E}}) =_\mathcal{S} \mathcal{E}(S_I, \mathbf{\Pi_{S_I}})$, see Figure~\ref{fig:rollout}.
 %
 Formally, for each $t \leq T$, we inductively define $S_t = \mathcal{K}(S_{t - 1}, \pi_t)$, where $S_0$ is the initial state. These $S_t$'s represent the \emph{intended} intermediate states for the robot. Further, let the states encountered during \emph{actual} execution be $S'_t$, $t \leq T$. 
 %

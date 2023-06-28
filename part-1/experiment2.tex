@@ -1,4 +1,4 @@
-\section{Evaluation and Results}\label{sec:evaluation}
+\label{sec:evaluation}
 %
 % ~\textcolor{red}{q. this para can be removed for shortening perhaps}In our experiments we study (i) whether our method can infer 
 % programs to translate instructions to desired goal states, 
@@ -11,27 +11,52 @@
 % Main accuracy results
 \begin{table*}[ht]
     \centering
-    \caption{Comparison between Proposed Model and NMN+  (BB: Bounding Boxes)}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \caption{Comparison between Proposed Model and NMN+ based on number of steps (BB: Bounding Boxes)}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
     \hline
-         Model  & \multicolumn{3}{|c|}{Overall} &  \multicolumn{2}{|c|}{Single-step} & \multicolumn{2}{|c|}{Double step} & \multicolumn{2}{|c|}{Simple} & \multicolumn{2}{|c|}{Complex} \\ 
+         Model  & \multicolumn{3}{|c|}{Overall} &  \multicolumn{2}{|c|}{Single-step} & \multicolumn{2}{|c|}{Double step} \\ 
          \hline
          \hline
-          & IOU & IOU-M & Program & IOU & IOU-M  & IOU & IOU-M  & IOU & IOU-M & IOU & IOU-M  \\
-           &  &  & (Action/Subj/Pred) & &   &  & &  &  &  &   \\
+          & IOU & IOU-M & Program & IOU & IOU-M  & IOU & IOU-M \\
+           &  &  & (Action/Subj/Pred) & &   &  &  \\
           \hline
-         NMN+ (gold BB) & 0.77 & 0.55 & --/0.81/0.76 & 0.80 & 0.56 &    0.71 & 0.52 &0.90 & 0.71 & 0.64 & 0.31\\ 
+         NMN+ (gold BB) & 0.77 & 0.55 & --/0.81/0.76 & 0.80 & 0.56 &    0.71 & 0.52 \\ 
          \hline 
-         Ours (gold BB)  & 0.87 & 0.72& 0.99/0.99/0.94 & 0.91 & 0.64 &   0.87 & 0.62 & 0.92 & 0.73 & 0.87 & 0.64 \\
+         Ours (gold BB)  & 0.87 & 0.72& 0.99/0.99/0.94 & 0.91 & 0.64 &   0.87 & 0.62 \\
         \hline 
-         NMN+ (extracted BB) & 0.69 & 0.32& --/0.81/0.55 & 0.78 & 0.49 &  0.58 & 0.22 & 0.79 & 0.55 & 0.60 & 0.20\\ 
+         NMN+ (extracted BB) & 0.69 & 0.32& --/0.81/0.55 & 0.78 & 0.49 &  0.58 & 0.22 \\ 
          \hline 
-         Ours (extracted BB) & 0.76  & 0.41  & 0.99/0.74/0.76 &0.80 & 0.43  & 0.69 & 0.54  & 0.83 & 0.62 & 0.69 & 0.24\\
+         Ours (extracted BB) & 0.76  & 0.41  & 0.99/0.74/0.76 &0.80 & 0.43  & 0.69 & 0.54 \\
          \hline 
     \end{tabular}
     % \vspace{1em}
     \label{tab:accuracy}
 \end{table*} 
+
+\begin{table*}[ht]
+    \centering
+    \caption{Comparison between Proposed Model and NMN+ based on instruction complexity  (BB: Bounding Boxes)}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+         Model  & \multicolumn{2}{|c|}{Simple} & \multicolumn{2}{|c|}{Complex} \\ 
+         \hline
+         \hline
+          & IOU & IOU-M & IOU & IOU-M  \\
+            &  &  &  &   \\
+          \hline
+         NMN+ (gold BB) & 0.90 & 0.71 & 0.64 & 0.31\\ 
+         \hline 
+         Ours (gold BB)  & 0.92 & 0.73 & 0.87 & 0.64 \\
+        \hline 
+         NMN+ (extracted BB) & 0.79 & 0.55 & 0.60 & 0.20\\ 
+         \hline 
+         Ours (extracted BB) & 0.83 & 0.62 & 0.69 & 0.24\\
+         \hline 
+    \end{tabular}
+    % \vspace{1em}
+    \label{tab:accuracy2}
+\end{table*} 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% EXPERIMENTAL SETUP %%%
@@ -116,7 +141,7 @@
 The dataset is collected in a PyBullet tabletop environment using a 
 simulated Franka Emika Panda robot arm. The workspace consists of a tabletop with blocks of different shapes and colors.
 %
-Each datapoint consists of an initial scene paired with a language instruction and the expected resulting final scene. 
+Each datapoint consists of an initial scene paired with a language instruction and the expected resulting final scene. We provide a framework for quickly simulating and generating data for an arbitrary length instruction on a scene with any number of objects.
 For training, close to 5000 synthetic scenes and language instructions(with a 80:20 train-test split) are sampled with 3-5 blocks of varying colors and shapes and placed at randomized orientations on the table. 
 %
 % The instructions range from single physical pick-place operation \emph{``Put the red block on the green block"} to ones involving a composition of such operations like \emph{``Put the red block which is behind the white dice to right of the blue cube, then put the lego block on top of red block"}. 
@@ -133,32 +158,33 @@ The proposed model (i) performs visuo-linguistic reasoning in a symbolic latent 
 
 % \textbf{CLIPort}~\cite{shridhar2022cliport} performs language-guided manipulation by leveraging the visual and linguistic semantics embedded in pre-trained CLIP~\cite{clip}. Unlike ours, the model lacks explicit, modular constructs to perform the reasoning inherent in object manipulation tasks.} ~\textcolor{red}{TODO: Add explanation for table3 
 
-\textbf{NMN+}, inspired from Neural Module Networks \cite{andreas2016neural}, assumes an object-centric state representation. However, in contrast to the proposed model, visuo-linguistic reasoning required for manipulation is performed using language-guided attention over object embeddings instead of using symbolic reasoning constructs. Figure~\ref{fig:nmn} provides the detailed architecture. The entire architecture is neural and is trained end-to-end with the loss same as that of the proposed model. 
+\textbf{NMN+}, inspired from Neural Module Networks \cite{andreas2016neural}, assumes an object-centric state representation. However, in contrast to the proposed model, visuo-linguistic reasoning required for manipulation is performed using language-guided attention over object embeddings instead of using symbolic reasoning constructs. %Figure~\ref{fig:nmn} provides the detailed architecture. 
+The entire architecture is neural and is trained end-to-end with the loss same as that of the proposed model. 
 
 % For a fair evaluation, our model and the baseline share the instruction encoder, the action simulator and the object feature extractor. The baseline includes an action decoder and four attention modules divided into two groups of two each. Each group takes in the encoded instruction and embedding for all objects present in scene and predicts two objects involved in manipulation. The location of the predicted objects and output of the action decoder is the input to the action decoder, that provides the predicted location as output. Here, \textit{location} includes both the bounding box and depth of the object. 
 
 
 
-\begin{figure}
-\begin{subfigure}{1.0\hsize}
-     \centering    
-     \includegraphics[scale=0.19]{figures/baseline.png}
-\end{subfigure}
-\caption{
-    \footnotesize{
-        \textbf{Object-centric baseline NMN+.} For a fair comparison, our model and NMN+ share the same language encoder (with LSTM-based splitter) and the visual extractor. Attention blocks compute language-guided attention over object embeddings to get the \emph{subject} and \emph{predicate} for the manipulation action. This is fed into the action simulator along with the action embedding from the action decoder to get the predicted final location of the object.}}
-        \vspace{-0.15in}
-            \label{fig:nmn}
-\end{figure}
+% \begin{figure}
+% \begin{subfigure}{1.0\hsize}
+%      \centering    \includegraphics[width=\textwidth]{figures/baseline.png}
+% \end{subfigure}
+% \caption{
+%     \footnotesize{
+%         \textbf{Object-centric baseline NMN+.} For a fair comparison, our model and NMN+ share the same language encoder (with LSTM-based splitter) and the visual extractor. Attention blocks compute language-guided attention over object embeddings to get the \emph{subject} and \emph{predicate} for the manipulation action. This is fed into the action simulator along with the action embedding from the action decoder to get the predicted final location of the object.}}
+%         \vspace{-0.15in}
+%             \label{fig:nmn}
+% \end{figure}
 
 The following metrics are used for comparing the proposed model with \emph{NMN+}:
-(i) \emph{Intersection over Union (IOU)} of the predicted and groundtruth bounding box is calculated in the 2D image space assuming a static camera viewing the scene. Average IOU over all objects in the scene and mean IOU for objects moved during execution, termed IOU-M,  are reported.  
-(ii) \emph{Program Accuracy}: The grounded program inferred for an (instruction, scene)-pair using the proposed model is compared with the manually annotated ground truth program. We separately report the grounding accuracy for the subject and predicate of our action (assumed binary) and the accuracy of the predicted action inferred from the instruction. Since, there is no explicit notion of grounded actions in the baseline, we do not report this metric for the baseline. 
+\begin{enumerate}
+    \item \emph{Intersubsection over Union (IOU)} of the predicted and groundtruth bounding box is calculated in the 2D image space assuming a static camera viewing the scene. Average IOU over all objects in the scene and mean IOU for objects moved during execution, termed IOU-M,  are reported.
+    \item \emph{Program Accuracy}: The grounded program inferred for an (instruction, scene)-pair using the proposed model is compared with the manually annotated ground truth program. We separately report the grounding accuracy for the subject and predicate of our action (assumed binary) and the accuracy of the predicted action inferred from the instruction. Since, there is no explicit notion of grounded actions in the baseline, we do not report this metric for the baseline. 
+\end{enumerate}    
 
 \begin{figure}[h!]
 \begin{subfigure}{0.5\hsize}
-     \centering    
-     \includegraphics[scale=0.19]{figures/multi-object-1.png}
+     \centering    \includegraphics[width=0.8\textwidth]{figures/multi-object-1.png}
     \caption{\footnotesize{IoU vs \# of objects}}
     % IoU of the predicted position of the object moved during execution with its ground truth position v/s number of objects in the scene.
     \label{fig:large_scenes}
@@ -174,43 +200,119 @@ The following metrics are used for comparing the proposed model with \emph{NMN+}
 \begin{subfigure}{0.5\hsize}
      \centering    
      %\includegraphics[height=4.375cm,width=3cm]{figures/multi-step.png}
-    \includegraphics[scale=0.19]{figures/multi-step-1.png}
+     \includegraphics[width=0.8\textwidth]{figures/multi-step-1.png}
     \caption{\footnotesize{IoU vs varying \# of steps}}
      %IoU of the predicted position of the object moved during execution with its ground truth position v/s number of atomic actions implied in the instruction.
     \label{fig:large_steps}
 \end{subfigure}
 \caption{\footnotesize{Performance in generalization settings}}
-\vspace{-0.15 in}
+% \vspace{-0.15 in}
 \end{figure}
 
 
-\begin{figure*}[hbt!]
-    \centering    
-    \includegraphics[width=16.5cm]{figures/row2a.png}
-    % \caption{
-    % \footnotesize{
-    % }}
+% \begin{figure*}[hbt!]
+%     \centering    
+%     \includegraphics[width=16.5cm]{figures/row2a.png}
+%     \label{fig:qual-1}
+% \end{figure*}
+% \begin{figure*}[hbt!]
+%     \centering    
+%     \includegraphics[width=17cm]{figures/row2b.png}
+%     \caption{
+%     \footnotesize{
+%     Execution of robot manipulator on (a) compound instructions, (b) scene with 15 objects, (c) double step instruction with relational attributes, (d) 5-step instruction. (d) also shows reconstruction of the predicted scene before each step of the simulation
+%     }}
+%     \label{fig:qual-1}
+%     % \vspace{-0.1 in}
+% \end{figure*}
+
+\begin{figure}
+    \centering
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/qual-1.png}
+        \caption{A compound instruction, \footnotesize{"Move the block which is a lego and green in color on top of the cube whose color is blue"}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/qual-2.png}
+        \caption{On a scene with 15 objects (Generalization to more objects), \footnotesize{"Place the cyan lego object to the left of the blue cube"}}
+    \end{subfigure}
+    \hfill
+
+    \vspace{1cm}
+
+    \begin{subfigure}{0.7\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/qual-3.png}
+        \caption{On a double step instruction with relational attributes (complex instruction), \footnotesize{"Place the thing at the right of the red lego object to the right of the green dice and put the cyan lego block on top of the cyan dice"}.}
+    \end{subfigure}
+
+    \vspace{1cm}
+
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/qual-4.png}
+        \caption{On a 5-step instruction (Generalization to longer horizon manipulation), \footnotesize{"Put the blue lego thing on the left side of the red lego thing and place the red cube on the left side of the white lego object and move the magenta dice on the right of the green box and move the red box on the left side of the blue lego thing and put the blue lego object to the left of the white lego thing"}. We Also show reconstruction of the predicted scene before each step of the simulation}
+    \end{subfigure}
+    
+    \caption{Qualitative results of demonstration using a simulated 7-DOF manipulator}
     \label{fig:qual-1}
-\end{figure*}
-\begin{figure*}[hbt!]
-    \centering    
-    \includegraphics[width=17cm]{figures/row2b.png}
-    \caption{
-    \footnotesize{
-    Execution of robot manipulator on (a) compound instructions, (b) scene with 15 objects, (c) double step instruction with relational attributes, (d) 5-step instruction. (d) also shows reconstruction of the predicted scene before each step of the simulation
-    }}
-    \label{fig:qual-1}
-    \vspace{-0.1 in}
-\end{figure*}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/cliport-qual.png}
+        \caption{CLIPort: Unsuccessful execution due to incorrect grounding}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/cliport-qual-ours.png}
+        \caption{Our model: Successful \\ execution}
+    \end{subfigure}
+    \hfill
+
+    \caption{Qualitative comparison with CLIPort. Instruction: “Move the dice that is blue in color on the left side of the box which is cyan in color"}
+    \label{fig:cliport-qual}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \hfill
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{assets/nmn-comb.png}
+        \caption{NMN+: Unsuccessful execution due to grounding the subject and predicate objects incorrectly}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{assets/ours-comb.png}
+        \caption{Our model: Successful \\ execution}
+    \end{subfigure}
+    \hfill
+
+    \caption{Qualitative comparison with NMN+. Instruction: “Put the white dice above the yellow lego object and move the yellow cube on top of the white dice"}
+    \label{fig:nmn-qual}
+\end{figure}
 
 
-Table \ref{tab:accuracy} reports the performance of our model and the baseline on the test set. We report both numbers: using gold set of bounding boxes and using bounding boxes extracted~\footnote{Excluded about 10\% no detection cases for both models.} using the approach described in Section~\ref{subsec:visual-reason}. Our model outperforms the baseline overall. For instructions with complex reasoning (resolution of binary spatial relations) involved, the proposed model outperforms the baseline by $33$ points in the IOU-M metric.
+Tables \ref{tab:accuracy} and \ref{tab:accuracy2} report the performance of our model and the baseline on the test set. We report both numbers: using gold set of bounding boxes and using bounding boxes extracted~\footnote{Excluded about 10\% no detection cases for both models.} using the approach described in subsection~\ref{subsec:visual-reason}. Our model outperforms the baseline overall. For instructions with complex reasoning (resolution of binary spatial relations) involved, the proposed model outperforms the baseline by $33$ points in the IOU-M metric. Figure~\ref{fig:nmn-qual} shows an example where our model improves over NMN+'s performance.
 %
 Disentangled representations of relations and concepts in \textit{Visual Reasoning} module allow the proposed model to reason over complex instructions.
 
-\textbf{CLIPort}~\cite{shridhar2022cliport} takes as input a dense, image-based state representation, in contrast to our object-centric state representation. It proposes a two-stream architecture that computes language-guided attention masks on the input scene for both pick and place locations. It lacks explicit symbolic constructs for reasoning about the scene. Instead, the reasoning required for manipulation is performed by leveraging the visuo-linguistic understanding of the large pre-trained model CLIP ~\cite{clip}. Table ~\ref{tab:cliport} compares \emph{CLIPort} with our model. Since \emph{CLIPort} performs only single-step pick-and-place operations, the numbers are calculated only on single-step examples. The following metrics are used (i) \emph{Placement Accuracy}: fraction of examples in which the predicted place location lies within the groundtruth bounding box of the moved object (ii) \emph{Identification Accuracy}: fraction of examples in which the predicted pick location lies within the groundtruth bounding box of the moved object. For the proposed model, the centre of the predicted bounding box location is used as the predicted place location.
+\textbf{CLIPort}~\cite{shridhar2022cliport} takes as input a dense, image-based state representation, in contrast to our object-centric state representation. It proposes a two-stream architecture that computes language-guided attention masks on the input scene for both pick and place locations. It lacks explicit symbolic constructs for reasoning about the scene. Instead, the reasoning required for manipulation is performed by leveraging the visuo-linguistic understanding of the large pre-trained model CLIP ~\cite{clip}. Table ~\ref{tab:cliport} compares \emph{CLIPort} with our model. Since \emph{CLIPort} performs only single-step pick-and-place operations, the numbers are calculated only on single-step examples. The following metrics are used \begin{enumerate}
+    \item \emph{Placement Accuracy}: fraction of examples in which the predicted place location lies within the groundtruth bounding box of the moved object
+    \item \emph{Identification Accuracy}: fraction of examples in which the predicted pick location lies within the groundtruth bounding box of the moved object. For the proposed model, the centre of the predicted bounding box location is used as the predicted place location.
+\end{enumerate}
 
-We observe that CLIPort on our dataset shows low accuracy in both predicting the object to be moved as well as the place location. Further, its performance deteriorates in examples with relational concepts. We note that the performance and sample-efficiency of CLIPort critically depends upon  spatial consistency of input images i.e. objects do not scale or distort depending on the viewing angle as in ~\cite{shridhar2022cliport}. To provide additional leverage to the baseline, we train CLIPort on 5 times more data than the original, results of which are reported under the title CLIPort-5x. We observe an improvement in performance on the larger dataset, although still worse than that of the proposed model. 
+We observe that CLIPort on our dataset shows low accuracy in both predicting the object to be moved as well as the place location. Further, its performance deteriorates in examples with relational concepts. We note that the performance and sample-efficiency of CLIPort critically depends upon  spatial consistency of input images i.e. objects do not scale or distort depending on the viewing angle as in ~\cite{shridhar2022cliport}. Figure~\ref{fig:cliport-qual} shows an example where our model improves over CLIPort's performance. To provide additional leverage to the baseline, we train CLIPort on 5 times more data than the original, results of which are reported under the title CLIPort-5x. We observe an improvement in performance on the larger dataset, although still worse than that of the proposed model. 
 % This can be attributed to (i) its inability to learn from sparse dataset (due to lack of modularity), (ii) the use of raw image as state representation, and (iii) lack of spatial consistency in images, i.e. objects can scale or distort depending on the viewing angle,  in contrast to the setting used by CLIPort. To further establish CLIPort's data inefficiency, we train it with 5 times more data. Specifically, for each scene in the original dataset, we add 5 additional instructions and corresponding final scenes. This leads to improvement in performance, although inferior to that of the proposed model. 
 
 
@@ -229,7 +331,7 @@ We observe that CLIPort on our dataset shows low accuracy in both predicting the
 
 % We demonstrate our model's ability to infer a sequence of grounded sub-goals, given an initial scene and instruction, that involves manipulating the scene over multiple time step and complex multi-hop reasoning.
 % %
-% Table \ref{tab:accuracy} reports the performance of our model and the baseline on the test set. We report both numbers: using gold set of bounding boxes and using bounding boxes extracted~\footnote{Excluded about 10\% no detection cases for both models.} using the approach described in Section~\ref{subsec:visual-reason}. Our model outperforms the baseline overall. For instructions with complex reasoning (resolution of binary spatial relations) involved, the proposed model outperforms the baseline by $33$ points in the IOU-M metric.
+% Table \ref{tab:accuracy} reports the performance of our model and the baseline on the test set. We report both numbers: using gold set of bounding boxes and using bounding boxes extracted~\footnote{Excluded about 10\% no detection cases for both models.} using the approach described in subsection~\ref{subsec:visual-reason}. Our model outperforms the baseline overall. For instructions with complex reasoning (resolution of binary spatial relations) involved, the proposed model outperforms the baseline by $33$ points in the IOU-M metric.
 % %
 % Disentangled representations of relations and concepts in \textit{Visual Reasoning} module allow the proposed model to reason over complex instructions. 
 
@@ -274,13 +376,53 @@ provided to a simulated 7-DOF Franka Emika manipulator in a table top setting.
 %
 The robot is provided language instructions and uses the model to predict a program that once executed transitions the world state to the intended one. The 2-D bounding boxes predicted by the action simulator are translated to 3-D coordinates in the world space via a learned MLP using simulated data.
 %
-The predicted positions are provided to a low-level motion planner for trajectory generation with crane grasping for picking/placing. 
+The predicted positions are provided to a low-level motion planner for trajectory generation with crane grasping for picking/placing. Since there is some error in predicting exact 3-D locations from 2-D bounding boxes, the execution of the low level motion planner is improved by assuming some heuristics, preventing collisions and aligning objects on top with ones underneath.  
 %Each step of the robot simulation is then performed by grasping the object at the initial location, moving the gripper to the final predicted location, and releasing the gripped object. 
 % 
-Figure \ref{fig:qual-1} shows execution by the robot manipulator on complex instructions, scenes having multiple objects, double step relational instructions, and multi-step instructions. We also visualise reconstruction of the moved objects before each step of the actual execution. The structural similarity index (SSIM) \cite{ssim2004} for the reconstruction model is 0.935.
-% omitted since we do not have space
-%Figure \ref{fig:relative} demonstrates model performance on an instruction containing relational attributes.
+Figure \ref{fig:qual-1} shows execution by the robot manipulator on complex instructions, scenes having multiple objects, double step relational instructions, and multi-step instructions. 
 %
+Figure \ref{fig:cliport-qual} and \ref{fig:nmn-qual} show qualitative comparisons with baselines on some examples where our model improves over their performance.
+
+We observe an execution success accuracy of 55.7\% for our model. An execution is successful if all objects are at correct positions (upto a small threshold) at each step of the instruction, and in an upright orientation. We observe that the drop in success compared to the earlier metrics is due to various reasons, such as (i) an error in bounding box predictions compounded with an error in 2D-to-3D predictions, (ii) Execution errors during grasp, release and motion trajectory during manipulation, (iii) Objects going out of range of the manipulator arm. In our next work, we adress recovery from a wide range of possible errors, including natural execution errors and manipulation by external agents. 
+
+
+\subsection{Scene reconstruction}
+
+The structural similarity index (SSIM) \cite{ssim2004} for the reconstruction model is 0.935, evaluated on the test set (containing upto 2-step instructions and upto 5 objects in the scene) by giving the ground-truth final object bounding boxes. We visualise reconstruction of the moved objects before each step of the actual execution in the 5-step instruction in figure \ref{fig:qual-1}. On further analysis, we can observe that the model correctly learns to decode the object embeddings, as can be seen in figure~\ref{fig:recons-qual}. The model is passed an empty table background as the initial input image, alongwith bounding box locations and embeddings of all objects. Switching all object colours to blue also yields the correct scene, demonstrating generalization to unseen combinations. 
+
+
+\begin{figure}
+    \centering
+
+    \hfill
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/recons-gt.png}
+        \caption{Ground-truth final scene\\ \\ \\}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/recons-init.png}
+        \caption{Initial empty bg image passed to the model with object embeddings and bboxes}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/recons-recon.png}
+        \caption{Reconstructed final scene \\ \\ \\}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/recons-blue.png}
+        \caption{Reconstructed scenes if all object types are changed to blue \\}
+    \end{subfigure}
+    \hfill
+    
+    \caption{Qualitative analysis of scene reconstruction}
+    \label{fig:recons-qual}
+\end{figure}
 
 
 

@@ -20,7 +20,6 @@
 \usepackage{subcaption}
 \usepackage{xcolor}
 \usepackage{listings}
-
 \usepackage{color}
  
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -182,37 +181,84 @@ diploma. All the work has been done in collaboration with other undergraduate an
 % to arabic from here on.
 \pagenumbering{arabic}
 
-\chapter{Learning neuro-symbolic programs}
-\pagebreak
-\input{part-1/intro}
-\pagebreak
-\input{part-1/related}
-\pagebreak
-\input{part-1/problem}
-\pagebreak
-\input{part-1/approach}
-\pagebreak
-\input{part-1/experiment2}
-\pagebreak
-\input{part-1/conclusions}
+\chapter{Introduction}
+\input{intro}
 \pagebreak
 
-\chapter{Learning to recover from plan failures}
+\chapter{Background}
+\input{background}
 \pagebreak
-\input{part-2/introduction}
+
+\chapter{Learning manipulation programs}
+\label{chap:part-1}
+% \chapter{Introduction}
+% \section{Overview}
+% \input{part-1/intro}
+
+% \section{Related Works}
+% \input{part-1/related}
+% \subsection{Interpretable Plans From Language By Predicting the Future}
+% \subsection{CLIPort}
+
+% \section{Background}
+% \subsection{Neuro-symbolic concept learner}
+% \subsection{Semantic image manipulation from scene graphs}
+
+\section{Problem Formulation}
+\input{part-1/problem}
+
+% \section{Contributions}
+
+% \pagebreak
+\section{Technical Approach}
+\input{part-1/approach}
+% \pagebreak
+\section{Evaluation and Results}
+\input{part-1/experiment2}
 \pagebreak
-\input{part-2/related}
-\pagebreak
+% \chapter{Conclusions}
+% \section{Limitations}
+
+% \section{Conclusion}
+% \input{part-1/conclusions}
+
+% \section{Future work}
+% \pagebreak
+
+\chapter{Error detection and recovery}
+\label{chap:part-2}
+% \pagebreak
+% \chapter{Introduction}
+% \section{Overview}
+% \input{part-2/introduction}
+
+% \section{Related Works}
+% \input{part-2/related}
+% \subsection{PDSketch}
+% \subsection{Towards Practical Multi-object Manipulation using
+% Relational Reinforcement Learning}
+
+\section{Problem Formulation}
 \input{part-2/problem}
-\pagebreak
+
+% \section{Contributions}
+% \pagebreak
+\section{Technical Approach}
 \input{part-2/approach}
-\pagebreak
+% \pagebreak
+\section{Evaluation and Results}
 \input{part-2/results}
 \pagebreak
-\input{part-2/limitations}
+
+\chapter{Conclusion}
+\input{conclusion}
 \pagebreak
-\input{part-2/conclusions}
-\pagebreak
+% \input{part-2/limitations}
+% \input{part-2/conclusions}
+% \section{Future work}
+% \pagebreak
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction

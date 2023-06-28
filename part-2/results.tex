@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%% EXPERIMENTS %%%%%%%%%%%%%%%%%%%%%%
-\section{Experimental Setup}\label{sec:experiments}
+\subsection{Experimental Setup}\label{sec:experiments}
 
 \textbf{Training and Evaluation Corpora. } 
 %
@@ -17,7 +17,7 @@ The proposed approach is compared with two baseline approaches: (i) \emph{RePlan
 \textbf{Evaluation Metrics. } We adopt the following metrics: (i) \textit{Detection Accuracy}: Detecting if the current state after an action execution is erroneous  (ii) \textit{Recovery Accuracy}: Given correct detection, generating a correct recovery plan which on execution leads to the intended intermediate state (iii) \textit{Length of recovery plan ($L_{plan}$)}: To evaluate if the returned plan is efficient. It is measured relative to the number of introduced errors in the current state $(L_{plan}/N_{err})$ and the length of the most optimal recovery plan possible $(L_{plan}/L_{opt})$. (iv) \textit{Time to generate recovery plan ($T_{plan}$)}: To evaluate if the recovery planning is fast. It is measured relative to the number of introduced errors in the current state $(T_{plan}/N_{err})$ and the length of the most optimal recovery plan possible $(T_{plan}/L_{opt})$. (v) \textit{Fraction of plan completed}: Evaluating the fraction up to which the original plan could be completed by successfully recovering from errors.
 
 %%%%%%%%%%%%%%%%%%%%%% RESULTS %%%%%%%%%%%%%%%%%%%%%% 
-\section{Results}\label{sec:results}
+\subsection{Results}\label{sec:results}
 Our experiments evaluate (i) effectiveness of the model in error recovery in relation to alternative approaches, (ii) an analysis of model components, (iii) effectiveness in relation to increase in in plan length and compounding of errors, and recovering from multiple errors, 
 %(iv) anytime version of the model, 
 and (v) qualitative results on a simulated Franka Emika Robot operating in a table top environment. 
